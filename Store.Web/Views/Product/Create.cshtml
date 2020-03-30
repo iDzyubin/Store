@@ -1,0 +1,34 @@
+@model ProductModel
+@{
+    ViewData["Title"] = "Добавить товар";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h1 class="display-4 text-center">Добавить товар</h1>
+        <hr/>
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Title" class="lead"></label>
+                <input asp-for="Title" type="email" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="lead"></label>
+                <input asp-for="Description" type="text" class="form-control"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="lead"></label>
+                <input asp-for="Price" type="text" class="form-control"/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <br/>
+                <button type="submit" class="btn btn-outline-info col-md-6 col-sm-4">
+                    Добавить
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

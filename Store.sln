@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Web", "Store.Web\Store.Web.csproj", "{F1C33BB3-A6D2-4C31-83CA-1AEACF969785}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.DataAccess", "Store.DataAccess\Store.DataAccess.csproj", "{59950C73-FF34-4D3C-9A7B-BEF7F444CD94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.BusinessLogic", "Store.BusinessLogic\Store.BusinessLogic.csproj", "{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1C33BB3-A6D2-4C31-83CA-1AEACF969785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C33BB3-A6D2-4C31-83CA-1AEACF969785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C33BB3-A6D2-4C31-83CA-1AEACF969785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C33BB3-A6D2-4C31-83CA-1AEACF969785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59950C73-FF34-4D3C-9A7B-BEF7F444CD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59950C73-FF34-4D3C-9A7B-BEF7F444CD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59950C73-FF34-4D3C-9A7B-BEF7F444CD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59950C73-FF34-4D3C-9A7B-BEF7F444CD94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

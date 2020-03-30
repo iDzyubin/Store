@@ -1,0 +1,70 @@
+@inject IBasketService BasketService
+@{
+    ViewData["Title"] = "Корзинка";
+    var basketLines = await BasketService.GetBasketLinesAsync();
+}
+<div>
+    <h1 class="display-4">Корзинка</h1>
+</div>
+<hr/>
+<br/>
+@if( !basketLines.ToArray().Any() )
+{
+    <div class="text-center alert alert-danger">Пока что корзинка пуста</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Сумма</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach( var line in basketLines.OrderBy( x => x.Id ) )
+        {
+            <tr>
+                <td>@line.Product.Title</td>
+                <td>@line.Product.Description</td>
+                <td>@line.Product.Price руб</td>
+                <td class="text-center">
+                    <div>
+                        <a asp-action="Add"
+                           asp-route-productId="@line.Id"
+                           asp-route-count="@( line.Count + 1 )">
+                            +
+                        </a>
+                        @line.Count
+                        <a asp-action="Add"
+                           asp-route-productId="@line.Id"
+                           asp-route-count=@( line.Count - 1 )>
+                            -
+                        </a>
+                    </div>
+                </td>
+                <td>@line.Total руб</td>
+                <td class="text-center">
+                    <a asp-action="Remove"
+                       asp-route-productId="@line.Id"
+                       class="btn btn-outline-danger">
+                        Удалить
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div>
+        <b>Итоговая сумма: <i>@basketLines.ToArray().Select( x => x.Product.Price * x.Count ).Sum()</i> руб</b>
+    </div>
+    <br/>
+    <div>
+        <a class="btn btn-outline-info" asp-controller="Sale" asp-action="Accept">Оформляем</a>
+    </div>
+}
