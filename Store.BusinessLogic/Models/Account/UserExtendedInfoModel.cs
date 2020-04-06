@@ -14,6 +14,11 @@ namespace Store.BusinessLogic.Models.Account
         public string FirstName { get; set; }
         
         /// <summary>
+        /// Отчество
+        /// </summary>
+        public string MiddleName { get; set; }
+        
+        /// <summary>
         /// Фамилия
         /// </summary>
         public string LastName { get; set; }
@@ -21,7 +26,12 @@ namespace Store.BusinessLogic.Models.Account
         /// <summary>
         /// Email
         /// </summary>
-        public string Email { get; set; }       
+        public string Email { get; set; }    
+        
+        /// <summary>
+        /// Телефон
+        /// </summary>
+        public string Phone { get; set; }
         
         /// <summary>
         /// Проведенные покупки

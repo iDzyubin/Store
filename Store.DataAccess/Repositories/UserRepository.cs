@@ -28,7 +28,12 @@ namespace Store.DataAccess.Repositories
         }
 
         public async Task UpdateAsync( User item )
-            => await _db.UpdateAsync( item );
+        {
+            var user      = _db.Users.First( x => x.Id == item.Id );
+            item.Password = user.Password;
+            item.Status   = user.Status;
+            await _db.UpdateAsync( item );
+        }
 
         public async Task DeleteAsync( Guid id )
             => await _db.Users

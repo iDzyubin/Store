@@ -132,5 +132,11 @@ namespace Store.BusinessLogic.Services.Account
 
         public async Task DeleteUserAsync( Guid userId )
             => await _userRepository.DeleteAsync( userId );
+
+        public async Task UpdateAccountAsync( AccountModel model )
+        {
+            var user = _mapper.Map<User>( model );
+            await _userRepository.UpdateAsync( user );
+        }
     }
 }

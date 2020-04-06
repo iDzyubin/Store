@@ -82,5 +82,12 @@ namespace Store.BusinessLogic.Services.Account
         /// Удалить пользователя
         /// </summary>
         Task DeleteUserAsync( Guid userId );
+
+        /// <summary>
+        /// Обновить информацию о пользователе
+        /// </summary>
+        /// <param name="model">Информация о пользователе</param>
+        /// <returns></returns>
+        Task UpdateAccountAsync( AccountModel model );
     }
 }

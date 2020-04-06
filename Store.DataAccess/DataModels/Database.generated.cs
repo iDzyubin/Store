@@ -124,13 +124,16 @@ namespace Store.DataAccess.DataModels
 	[Table(Schema="sd", Name="users")]
 	public partial class User
 	{
-		[Column("id"),         PrimaryKey, NotNull] public Guid       Id        { get; set; } // uuid
-		[Column("first_name"),             NotNull] public string     FirstName { get; set; } // character varying
-		[Column("last_name"),              NotNull] public string     LastName  { get; set; } // character varying
-		[Column("email"),                  NotNull] public string     Email     { get; set; } // character varying
-		[Column("password"),               NotNull] public string     Password  { get; set; } // character varying
-		[Column("is_admin"),               NotNull] public bool       IsAdmin   { get; set; } // boolean
-		[Column("status"),                 NotNull] public UserStatus Status    { get; set; } // integer
+		[Column("id"),          PrimaryKey,  NotNull] public Guid       Id         { get; set; } // uuid
+		[Column("first_name"),               NotNull] public string     FirstName  { get; set; } // character varying
+		[Column("last_name"),                NotNull] public string     LastName   { get; set; } // character varying
+		[Column("email"),                    NotNull] public string     Email      { get; set; } // character varying
+		[Column("password"),                 NotNull] public string     Password   { get; set; } // character varying
+		[Column("is_admin"),                 NotNull] public bool       IsAdmin    { get; set; } // boolean
+		[Column("status"),                   NotNull] public UserStatus Status     { get; set; } // integer
+		[Column("middle_name"),    Nullable         ] public string     MiddleName { get; set; } // character varying
+		[Column("phone"),          Nullable         ] public string     Phone      { get; set; } // character varying
+		[Column("address"),        Nullable         ] public string     Address    { get; set; } // character varying
 
 		#region Associations
 

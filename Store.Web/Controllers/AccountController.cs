@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +20,16 @@ namespace Store.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Basic ctor.
         /// </summary>
         /// <param name="accountService"></param>
-        public AccountController( IAccountService accountService )
+        public AccountController( IAccountService accountService, IMapper mapper )
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -154,6 +157,32 @@ namespace Store.Web.Controllers
         {
             await _accountService.DeleteUserAsync( userId );
             return RedirectToAction( "Index", "Home" );
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid? userId)
+        {
+            if( userId == null )
+            {
+                return RedirectToAction( "SignIn" );
+            }
+
+            var user = await _accountService.GetUserAsync( userId.Value );
+            var model = _mapper.Map<AccountModel>( user );
+            return View( model );
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Update( AccountModel model )
+        {
+            if( !ModelState.IsValid )
+            {
+                return View( model );
+            }
+
+            model.Id = User.GetId() ?? Guid.Empty;
+            await _accountService.UpdateAccountAsync( model );
+            return RedirectToAction( "Profile", "Account" );
         }
 
         /// <summary>

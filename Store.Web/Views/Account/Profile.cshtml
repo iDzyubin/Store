@@ -16,18 +16,35 @@
         <dd class="col-sm-10">
             @Model.Email
         </dd>
+       
         <dt class="col-sm-2">
             Имя
         </dt>
         <dd class="col-sm-10">
             @Model.FirstName
         </dd>
+        
+        <dt class="col-sm-2">
+            Отчество
+        </dt>
+        <dd class="col-sm-10">
+            @Model.MiddleName
+        </dd>
+        
         <dt class="col-sm-2">
             Фамилия
         </dt>
         <dd class="col-sm-10">
             @Model.LastName
         </dd>
+        
+        <dt class="col-sm-2">
+            Телефон
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Phone
+        </dd>
+   
         <dt class="col-sm-2">
             Кол-во заказов
         </dt>
@@ -45,7 +62,9 @@ else
 {
     <hr/>
     <br/>
-    <h3><small class="text-muted">Список заказов</small></h3>
+    <h3>
+        <small class="text-muted">Список заказов</small>
+    </h3>
     <br/>
 
     <div>
@@ -75,7 +94,9 @@ else
                             <a class="btn btn-outline-danger"
                                asp-controller="Sale"
                                asp-action="Cancel"
-                               asp-route-transactionId="@sale.TransactionId">Отменить</a>
+                               asp-route-transactionId="@sale.TransactionId">
+                                Отменить
+                            </a>
                         }
                     </td>
                 </tr>
@@ -85,10 +106,16 @@ else
     </div>
 }
 <div>
-    <a asp-controller="Account" 
-       asp-action="Delete" 
-       asp-route-userId="@User.GetId().Value" 
+    <a asp-controller="Account"
+       asp-action="Delete"
+       asp-route-userId="@User.GetId().Value"
        class="btn btn-outline-danger">
         Удалить аккаунт
+    </a>
+    <a asp-controller="Account"
+       asp-action="Update"
+       asp-route-userId="@User.GetId()"
+       class="btn btn-outline-info">
+        Обновить информацию
     </a>
 </div>
