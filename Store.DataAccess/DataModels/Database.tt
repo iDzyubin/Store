@@ -1,0 +1,30 @@
+﻿<#@ template language="C#" debug="True" hostSpecific="True"                            #>
+<#@ output extension=".generated.cs"                                                   #>
+<#@ include file="$(LinqToDBT4PostgreSQLTemplatesDirectory)LinqToDB.PostgreSQL.Tools.ttinclude" #>
+<#@ include file="$(LinqToDBT4PostgreSQLTemplatesDirectory)PluralizationService.ttinclude"      #>
+<# //@ include file="$(ProjectDir)LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" #>
+<# //@ include file="$(ProjectDir)LinqToDB.Templates\PluralizationService.ttinclude"      #>
+<#
+	NamespaceName = "Store.DataAccess.DataModels";
+	DataContextName = "MainDb";
+	GetSchemaOptions.IncludedSchemas = new[] { "sd" };
+
+	LoadPostgreSQLMetadata("localhost", "5432", "store_db", "postgres", "password");
+
+	var enums = new Dictionary<string, string>
+	{
+		{"sale_items.status", "SaleItemStatus"},
+		{"transactions.status", "TransactionStatus"},
+		{"users.status", "UserStatus"}
+	};
+
+	foreach( var e in enums )
+	{
+		var table = "sd." + e.Key.Split( '.' )[0];
+		var column = e.Key.Split( '.' )[1];
+
+		Tables[table].Columns[column].Type = e.Value;
+	}
+
+	GenerateModel();
+#>
