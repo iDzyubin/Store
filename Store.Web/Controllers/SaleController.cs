@@ -27,7 +27,6 @@ namespace Store.Web.Controllers
             _accountService = accountService;
         }
 
-        // TODO. Также, по возможности, добавить span для количества товаров в корзине.
         /// <summary>
         /// Подтвердить продажу товара
         /// </summary>
