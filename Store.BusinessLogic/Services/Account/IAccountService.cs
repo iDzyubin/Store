@@ -77,5 +77,10 @@ namespace Store.BusinessLogic.Services.Account
         /// <param name="model">Данные пользователя</param>
         /// <returns></returns>
         Task ActivateTemporaryAccountAsync( SignUpModel model );
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        Task DeleteUserAsync( Guid userId );
     }
 }

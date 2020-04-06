@@ -84,3 +84,11 @@ else
         </table>
     </div>
 }
+<div>
+    <a asp-controller="Account" 
+       asp-action="Delete" 
+       asp-route-userId="@User.GetId().Value" 
+       class="btn btn-outline-danger">
+        Удалить аккаунт
+    </a>
+</div>

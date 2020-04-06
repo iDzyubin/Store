@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LinqToDB;
 using Store.DataAccess.DataModels;
@@ -29,8 +30,11 @@ namespace Store.DataAccess.Repositories
         public async Task UpdateAsync( User item )
             => await _db.UpdateAsync( item );
 
-        public Task DeleteAsync( Guid id )
-            => _db.Users.DeleteAsync( x => x.Id == id );
+        public async Task DeleteAsync( Guid id )
+            => await _db.Users
+                .Where( x => x.Id == id )
+                .Set(x => x.Status, UserStatus.Deleted)
+                .UpdateAsync();
 
         public async Task<User> GetAsync( Guid id )
             => await _db.Users.FirstOrDefaultAsync( x => x.Id == id );

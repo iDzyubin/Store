@@ -56,15 +56,15 @@ namespace Store.DataAccess.DataModels
     public enum UserStatus
     {
         [Display(Name = "Отсутствует")]
-        None,
+        None = 0,
         
         [Display(Name = "Подтвержен")]
-        Approved,
+        Approved = 1,
         
         [Display(Name = "Удален")]
-        Deleted,
+        Deleted = 2,
         
         [Display(Name = "Временный пользователь")]
-        Temporary
+        Temporary = 3
     }
 }

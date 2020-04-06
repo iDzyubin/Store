@@ -60,6 +60,12 @@ namespace Store.BusinessLogic.Services.Account
                 return ( false, errors );
             }
 
+            if( user.Status == UserStatus.Deleted )
+            {
+                errors[nameof(email)] = $"Пользователь с email '{email}' был удален ранее. Возможно восстановление аккаунта";
+                return ( false, errors );
+            }
+
             var isValidPassword = _passwordService.ValidateHash( password, user.Password );
             if( !isValidPassword )
             {
@@ -123,5 +129,8 @@ namespace Store.BusinessLogic.Services.Account
             user.Status = UserStatus.Approved;
             await _userRepository.UpdateAsync( user );
         }
+
+        public async Task DeleteUserAsync( Guid userId )
+            => await _userRepository.DeleteAsync( userId );
     }
 }

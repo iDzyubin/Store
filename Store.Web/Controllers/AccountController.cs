@@ -147,6 +147,16 @@ namespace Store.Web.Controllers
         }
 
         /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            await _accountService.DeleteUserAsync( userId );
+            return RedirectToAction( "Index", "Home" );
+        }
+
+        /// <summary>
         /// Аутентификация пользователя на низком уровне.
         /// Добавляем claims и проводим Cookie авторизацию.
         /// </summary>
