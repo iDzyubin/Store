@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.DataAccess", "Store.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.BusinessLogic", "Store.BusinessLogic\Store.BusinessLogic.csproj", "{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Migrator", "Store.Migrator\Store.Migrator.csproj", "{A64D95AA-619A-49F9-96B4-7EB70EDBECC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C5813D0-8A73-4959-ADE3-04E704D3CDC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A64D95AA-619A-49F9-96B4-7EB70EDBECC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A64D95AA-619A-49F9-96B4-7EB70EDBECC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A64D95AA-619A-49F9-96B4-7EB70EDBECC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A64D95AA-619A-49F9-96B4-7EB70EDBECC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

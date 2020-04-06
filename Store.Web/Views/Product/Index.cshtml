@@ -1,8 +1,10 @@
-@using Store.Web.Security
-@inject IProductRepository ProductRepository
+@using Store.Web.Services
+@inject IProductService ProductService
+@inject UserIdentifierService UserIdentifierService
 @{
     ViewData["Title"] = "Товары";
-    var products = (await ProductRepository.GetAsync()).ToArray();
+    var userId = UserIdentifierService.GetUserId( User.GetId(), TempData["id"] );
+    var products = ( await ProductService.GetProductLines( userId ) ).ToArray();
 }
 
 <div>
@@ -18,37 +20,60 @@
     {
         <table class="table table-striped table-bordered">
             <thead>
-            <tr>
-                <th>Наименование</th>
-                <th>Описание</th>
-                <th>Цена</th>
-                <th></th>
+            <tr class="d-flex">
+                <th class="col-2">Наименование</th>
+                <th class="col-@( User.IsAdmin() ? 5 : 7 )">Описание</th>
+                <th class="col-1">Цена</th>
+                @if( User.IsAdmin() )
+                {
+                    <th class="col-2"></th>
+                    <th class="col-2"></th>
+                }
+                else
+                {
+                    <th class="col-2"></th>
+                }
             </tr>
             </thead>
             <tbody>
             @foreach( var product in products )
             {
-                <tr>
-                    <td>@product.Title</td>
-                    <td>@product.Description</td>
-                    <td>@product.Price</td>
-                    <td class="text-center">
-                        @if( User.IsAdmin() )
-                        {
-                            <a class="btn btn-outline-danger" 
-                               asp-controller="Product" 
+                <tr class="d-flex">
+                    <td class="col-2">@product.Title</td>
+                    <td class="col-@( User.IsAdmin() ? 5 : 7 )">@product.Description</td>
+                    <td class="col-1">@product.Price</td>
+
+                    @if( User.IsAdmin() )
+                    {
+                        <td class="text-center col-2">
+                            <a class="btn btn-outline-info"
+                               asp-controller="Product"
+                               asp-action="Update"
+                               asp-route-id="@product.Id">
+                                Обновить
+                            </a>
+                        </td>
+                        <td class="text-center col-2">
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Product"
                                asp-action="Delete"
-                               asp-route-id=@product.Id></a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-outline-success"
-                               asp-controller="Basket" 
-                               asp-action="Add" 
-                               asp-route-productId=@product.Id 
-                               asp-route-count=1>Добавить</a>
-                        }
-                    </td>
+                               asp-route-id="@product.Id">
+                                Удалить
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center col-2">
+                            <a class="btn btn-outline-success @(product.IsInBasket ? "disabled" : "")"
+                               asp-controller="Basket"
+                               asp-action="Add"
+                               asp-route-productId="@product.Id"
+                               asp-route-count="1">
+                                @(product.IsInBasket ? "В корзине" : "Добавить")
+                            </a>
+                        </td>
+                    }
                 </tr>
             }
             </tbody>

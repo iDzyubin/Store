@@ -2,8 +2,14 @@ using System;
 
 namespace Store.BusinessLogic.Services
 {
+    /// <summary>
+    /// Сервис для сообщения на главном экране
+    /// </summary>
     public class GreetingService
     {
+        /// <summary>
+        /// Возвращаем приветствие
+        /// </summary>
         public string GetGreeting()
         {
             var currentHour = DateTime.Now.Hour;

@@ -9,26 +9,38 @@ using Store.BusinessLogic.Models.Account;
 using Store.BusinessLogic.Models.Product;
 using Store.BusinessLogic.Services.Account;
 using Store.Web.Extensions;
-using Store.Web.Models;
 using Store.Web.Security;
 
 namespace Store.Web.Controllers
 {
+    /// <summary>
+    /// Контроллер для работы с аккаунтом.
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
 
-        
+        /// <summary>
+        /// Basic ctor.
+        /// </summary>
+        /// <param name="accountService"></param>
         public AccountController( IAccountService accountService )
         {
             _accountService = accountService;
         }
 
-        
+        /// <summary>
+        /// Отрисовываем страницу регистрации
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult SignUp() => View();
 
-        
+        /// <summary>
+        /// Регистрируем пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp( SignUpModel model )
@@ -47,7 +59,16 @@ namespace Store.Web.Controllers
             var result = new SignUpResultModel();
             try
             {
-                await _accountService.SignUpAsync( model );
+                if( await _accountService.IsTemporaryUserAsync( Guid.Parse( Request.Cookies["id"] ) ) )
+                {
+                    model.Id = Guid.Parse( Request.Cookies["id"] );
+                    await _accountService.ActivateTemporaryAccountAsync( model );
+                }
+                else
+                {
+                    await _accountService.SignUpAsync( model );
+                }
+
                 result.AlertType = "alert-info";
                 result.AlertMessage = "Регистрация прошла успешно";
             }
@@ -60,11 +81,18 @@ namespace Store.Web.Controllers
             return View( "SignUpResult", result );
         }
 
-
+        /// <summary>
+        /// Отрисовываем страницу авторизации
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult SignIn() => View();
 
-        
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn( SignInModel model )
@@ -85,15 +113,26 @@ namespace Store.Web.Controllers
             return RedirectToAction( "Index", "Home" );
         }
 
-
+        /// <summary>
+        /// Деавторизация пользователя
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync( CookieAuthenticationDefaults.AuthenticationScheme );
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
             return RedirectToAction( "Index", "Home" );
         }
-        
-        
+
+        /// <summary>
+        /// Профиль пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Profile( Guid? id )
         {
@@ -106,8 +145,13 @@ namespace Store.Web.Controllers
             var model = await _accountService.GetUserExtendedInfoAsync( id.Value );
             return View( model );
         }
-        
 
+        /// <summary>
+        /// Аутентификация пользователя на низком уровне.
+        /// Добавляем claims и проводим Cookie авторизацию.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [NonAction]
         private async Task AuthenticateAsync( string email )
         {
@@ -119,7 +163,9 @@ namespace Store.Web.Controllers
                 new Claim( DvClaimTypes.IsAdmin, user.IsAdmin.ToString() )
             };
             var identity = new ClaimsIdentity( claims, "email" );
-            await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal( identity ) );
+            await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal( identity )
+            );
         }
     }
 }

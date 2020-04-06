@@ -10,7 +10,7 @@
         <form asp-action="Create" method="post">
             <div class="form-group">
                 <label asp-for="Title" class="lead"></label>
-                <input asp-for="Title" type="email" class="form-control"/>
+                <input asp-for="Title" type="text" class="form-control"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="lead"></label>
-                <input asp-for="Price" type="text" class="form-control"/>
+                <input asp-for="Price" type="number" class="form-control"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group text-center">

@@ -4,6 +4,12 @@ using Store.Web.Security;
 
 namespace Store.Web.Filters
 {
+    /// <summary>
+    /// Обработка claims пользователя.
+    /// Проверка, что он авторизован
+    /// Если авторизован - берем его userId
+    /// Если он админ - отмечаем, что имеет админские права
+    /// </summary>
     public class UserClaimsFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting( ActionExecutingContext context )

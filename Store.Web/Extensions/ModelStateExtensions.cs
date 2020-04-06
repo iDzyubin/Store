@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Store.Web.Extensions
 {
+    /// <summary>
+    /// Собираем все ошибки в единое хранилище.
+    /// </summary>
     public static class ModelStateExtensions
     {
         public static void AddModelErrors( 

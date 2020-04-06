@@ -1,44 +1,35 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LinqToDB;
 using Store.DataAccess.DataModels;
 using Store.DataAccess.Interfaces;
 
 namespace Store.DataAccess.Repositories
 {
-    // TODO.
     public class ProductRepository : IProductRepository
     {
-        private readonly List<Product> Products = new List<Product>
-        {
-            new Product { Id = Guid.NewGuid(), Title = "Fruits",     Description = "", Price = 19.99m },
-            new Product { Id = Guid.NewGuid(), Title = "Vegetables", Description = "", Price = 9.99m },
-            new Product { Id = Guid.NewGuid(), Title = "Chocolates", Description = "", Price = 29.99m },
-        };
+        private readonly MainDb _db;
 
-        public Task InsertAsync( Product item )
+        public ProductRepository( MainDb db )
+            => _db = db;
+
+        public async Task InsertAsync( Product item )
         {
-            throw new NotImplementedException();
+            item.Id = Guid.NewGuid();
+            await _db.InsertAsync( item );
         }
 
-        public Task UpdateAsync( Product item )
-        {
-            throw new NotImplementedException();
-        }
+        public async Task UpdateAsync( Product item )
+            => await _db.UpdateAsync( item );
 
-        public Task DeleteAsync( Guid id )
-        {
-            throw new NotImplementedException();
-        }
+        public async Task DeleteAsync( Guid id )
+            => await _db.Products.DeleteAsync( x => x.Id == id );
 
-        public Task<Product> GetAsync( Guid id )
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Product> GetAsync( Guid id )
+            => await _db.Products.FirstOrDefaultAsync( x => x.Id == id );
 
         public async Task<IEnumerable<Product>> GetAsync()
-        {
-            return Products;
-        }
+            => await _db.Products.ToListAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Store.Web.Filters;
 using Store.Web.Models;
 
 namespace Store.Web.Controllers

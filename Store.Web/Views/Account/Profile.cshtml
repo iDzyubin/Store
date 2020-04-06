@@ -1,5 +1,6 @@
+@using Store.BusinessLogic.Extensions
+@using Store.DataAccess.DataModels
 @model Store.BusinessLogic.Models.Account.UserExtendedInfoModel
-@inject ISaleService SaleService
 @{
     ViewData["Title"] = "Профиль";
 }
@@ -13,24 +14,30 @@
             E-mail адрес
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor( model => model.Email )
+            @Model.Email
         </dd>
         <dt class="col-sm-2">
             Имя
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor( model => model.FirstName )
+            @Model.FirstName
         </dd>
         <dt class="col-sm-2">
             Фамилия
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor( model => model.LastName )
+            @Model.LastName
+        </dd>
+        <dt class="col-sm-2">
+            Кол-во заказов
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Sales.Count()
         </dd>
     </dl>
 </div>
 
-@if( !SaleService.GetSales().Any() )
+@if( !Model.Sales.Any() )
 {
     <div class="alert alert-info">На данный момент заказов не было сформировано</div>
 }
@@ -52,16 +59,24 @@ else
             </tr>
             </thead>
             <tbody>
-            @foreach( var sale in SaleService.GetSales() )
+            @foreach( var sale in Model.Sales )
             {
                 <tr>
-                    <td>@sale.Id</td>
-                    <td>@sale.TotalPrice</td>
-                    <td>@sale.Status</td>
+                    <td>@sale.TransactionId</td>
+                    <td>@sale.TotalPrice руб</td>
+                    <td>@sale.Status.GetDisplayName()</td>
                     <td class="text-center">
-                        <a class="btn btn-outline-danger"
-                           asp-controller="Sale"
-                           asp-action="Cancel">Отменить</a>
+                        @if( sale.Status == TransactionStatus.Canceled )
+                        {
+                            <a class="btn btn-outline-dark disabled">Отменить</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Sale"
+                               asp-action="Cancel"
+                               asp-route-transactionId="@sale.TransactionId">Отменить</a>
+                        }
                     </td>
                 </tr>
             }
